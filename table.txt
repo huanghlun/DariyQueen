@@ -1,0 +1,112 @@
+create table Route(
+  rid char(5) not null unique,
+  origin varchar(30),
+  destination varchar(30),
+  duration int,
+  attractions longtext,
+  price double,
+  primary key (rid)
+)
+
+create table team(
+  tid char(5),
+  pnum int,
+  sdate varchar(15),
+  bdate varchar(15),
+  primary key(tid)
+)
+
+create table hotel(
+  hid char(5),
+  hname varchar(20),
+  hstar char(1),
+  hprice double,
+  address longtext,
+  phone varchar(11),
+  primary key(hid)
+)
+
+create table user(
+  uid char(5),
+  uname varchar(10),
+  ucode char(6),
+primary key (uid))
+
+create table airplane(
+  aid char(5),
+  date varchar(15),
+  duration double,
+  price double,
+  primary key(aid,date)
+               )
+
+create table guide(
+  gid char(5),
+  gname varchar(10),
+  gage int,
+  gphone varchar(11),
+  level varchar(10)
+)
+
+create table visitor(
+vid char(5),
+vname varchar(10),
+vsex char(1),
+vage int,
+id char(5),
+vphone varchar(11)
+)
+
+create table orders(
+oid char(5),
+otime varchar(15),
+oprice double,
+primary key (oid))
+
+create table route_hotel(
+  rid char(5) references route(rid),
+  hid char(5) references hotel(hid),
+  primary key (rid,hid)
+)
+
+create table route_team(
+  rid char(5) references route(rid),
+  tid char(5) references team(tid),
+  primary key (rid,tid)
+)
+
+create table team_airplane(
+  aid char(5) references airplane(aid),
+  tid char(5) references team(tid),
+  primary key (aid,tid)
+)
+
+
+create table guide_team(
+  gid char(5) references guide(gid),
+  tid char(5) references team(tid),
+  primary key (gid,tid)
+)
+
+create table orders_team(
+  oid char(5) references orders(oid),
+  tid char(5) references team(tid),
+  primary key (oid,tid)
+)
+
+create table visitor_team(
+vid char(5) references visitor(vid),
+tid char(5) references team(tid),
+primary key(vid,tid)
+)
+
+create table orders_visitor(
+oid char(5) references orders(oid),
+vid char(5) references visitor(vid),
+primary key (oid,vid))
+
+create table user_orders(
+uid char(5) references user(uid),
+oid char(5) references orders(oid),
+primary key (uid,oid))
+
